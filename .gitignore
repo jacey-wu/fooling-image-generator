@@ -1,0 +1,12 @@
+# Runnables
+*/*.pyc
+__*
+
+# project config files
+.idea/*
+
+# Trained models
+classifier/model/*
+
+# Training logs
+classifier/log/*
