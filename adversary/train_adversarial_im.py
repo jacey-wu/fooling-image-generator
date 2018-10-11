@@ -134,36 +134,6 @@ def main(argv=None):
         x_var = cnn.image_variable([const.BATCH_SIZE, 28, 28, 1], name="x_var")  # Build variable for image alteration
         print("Finished building inputs and outputs")
 
-        # Classifier architecture (the same with that of MNIST classifier)
-        # with tf.variable_scope("classifier", reuse=tf.AUTO_REUSE):
-        #
-        #     # Convolutional layer 1
-        #     W_conv1 = cnn.weight_variable([5, 5, 1, 32], name="W_conv1")
-        #     b_conv1 = cnn.bias_variable([32], name="b_conv1")
-        #
-        #     h_conv1 = tf.nn.relu(cnn.conv2d_basic(x_var, W_conv1, b_conv1), name="h_conv1")
-        #     h_pool1 = cnn.max_pool_2x2(h_conv1)
-        #
-        #     # Convolutional layer 2
-        #     W_conv2 = cnn.weight_variable([5, 5, 32, 64], name="W_conv2")
-        #     b_conv2 = cnn.bias_variable([64], name="b_conv2")
-        #
-        #     h_conv2 = tf.nn.relu(cnn.conv2d_basic(h_pool1, W_conv2, b_conv2), name="h_conv2")
-        #     h_pool2 = cnn.max_pool_2x2(h_conv2)
-        #
-        #     # Fully connected layer 1
-        #     h_pool2_flat = tf.reshape(h_pool2, [-1, 7 * 7 * 64])
-        #
-        #     W_fc1 = cnn.weight_variable([7 * 7 * 64, 1024], name="W_fc1")
-        #     b_fc1 = cnn.bias_variable([1024], name="b_fc1")
-        #
-        #     h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1, name="h_fc1")
-        #
-        #     # Fully connected layer 2 (Output layer)
-        #     W_fc2 = cnn.weight_variable([1024, 10], name="W_fc2")
-        #     b_fc2 = cnn.bias_variable([10], name="b_fc2")
-        #
-        #     y_ = tf.nn.softmax(tf.matmul(h_fc1, W_fc2) + b_fc2, name='y_')
         y_ = mnist_classifier(x_var, 1)
         print("Finished building image generator")
 
