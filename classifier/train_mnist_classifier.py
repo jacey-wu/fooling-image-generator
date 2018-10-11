@@ -93,7 +93,7 @@ def main(argv=None):
             summary_writer = tf.summary.FileWriter(log_dir)
 
             # Train classifier
-            max_epoch = 20
+            max_epoch = 10
             batch_size = 50
             keep_probab = 0.5
 
@@ -104,11 +104,11 @@ def main(argv=None):
                 if (step * batch_size) % mnist.train.images.shape[0] == 0:
 
                     # Log and report accuracy
-                    accu, summary_str = sess.run([accuracy, log_accuracy],
+                    entropy, accu, summary_str = sess.run([cross_entropy, accuracy, log_accuracy],
                                                  feed_dict={x: mnist.validation.images,
                                                             y: mnist.validation.labels, keep_prob: 1.0})
                     summary_writer.add_summary(summary_str, step)
-                    print("Step = {}, epoch = {}, validation accuracy = {}".format(step, curr_epoch, accu))
+                    print("Step = {}, epoch = {}, validation accuracy = {}, entropy = {}".format(step, curr_epoch, accu, entropy))
 
                     # Save model weights
                     model_saver.save(sess, os.path.join(model_dir, "mnist_classifier.ckpt"), step)
@@ -117,13 +117,12 @@ def main(argv=None):
                 batch_xs, batch_ys = mnist.train.next_batch(batch_size)
                 sess.run(train_step, feed_dict={x: batch_xs, y: batch_ys, keep_prob: keep_probab})
 
-            accu, summary_str = sess.run([accuracy, log_accuracy],
+            entropy, accu, summary_str = sess.run([cross_entropy, accuracy, log_accuracy],
                                          feed_dict={x: mnist.validation.images,
                                                     y: mnist.validation.labels, keep_prob: 1.0})
             summary_writer.add_summary(summary_str, max_step)
-            print("Step = {}, epoch = {}, validation accuracy = {}".format(max_step, max_epoch, accu))
+            print("Step = {}, epoch = {}, validation accuracy = {}, entropy = {}".format(max_step, max_epoch, accu, entropy))
             model_saver.save(sess, os.path.join(model_dir, "mnist_classifier.ckpt"), max_step)
-
 
 
 if __name__ == "__main__":
