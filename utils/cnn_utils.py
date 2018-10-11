@@ -48,3 +48,12 @@ def batch_norm(x, n_out, phase_train, scope='bn', decay=0.9, eps=1e-5):
 
 def max_pool_2x2(x):
     return tf.nn.max_pool(x, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding="SAME")
+
+
+def image_variable(shape, initial=None, name=None, stddev=0.02):
+    if initial is None:
+        initial = tf.truncated_normal(shape, stddev=stddev)
+    if name is None:
+        return tf.Variable(initial)
+    else:
+        return tf.get_variable(name, initializer=initial)

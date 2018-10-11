@@ -10,3 +10,6 @@ classifier/model/*
 
 # Training logs
 classifier/log/*
+
+# Saved adversarial images
+*/saved_images/*
